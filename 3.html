@@ -1,0 +1,97 @@
+<!--
+ * @Description: 
+ * @Date: 2024-04-10 10:50:48
+ * @LastEditors: huangly
+ * @LastEditTime: 2024-04-10 11:02:58
+ * @FilePath: /css-Demo/3.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="./Global.css">
+</head>
+
+<body class="center">
+  <div class="loader"></div>
+</body>
+<script>
+
+</script>
+
+<style>
+  .loader {
+    --s: 25px;
+    /* 定义一个CSS变量s，值为25px */
+    --_d: calc(0.353*var(--s));
+    /* 定义一个CSS变量_d，值为变量s的0.353倍 */
+    width: calc(var(--s) + var(--_d));
+    /* 宽度为变量s和变量_d的和 */
+    aspect-ratio: 1;
+    /* 宽高比为1，即宽度和高度相等 */
+    display: flex;
+    /* 使用flex布局 */
+  }
+
+  .loader:before,
+  .loader:after {
+    content: "";
+    /* 设置伪元素的内容为空 */
+    flex: 1;
+    /* 设置伪元素的flex值为1，使其在flex布局中占据剩余空间 */
+    clip-path: polygon(var(--_d) 0, 100% 0, 100% calc(100% - var(--_d)), calc(100% - var(--_d)) 100%, 0 100%, 0 var(--_d));
+    /* 使用clip-path属性创建一个多边形剪切路径，路径的各个点的位置由一系列的坐标定义，这些坐标使用CSS变量_d和百分比值来计算。
+       具体来说，这个多边形的六个点分别是：
+       1. (_d, 0)：左上角，距离左边_d，距离上边0；
+       2. (100%, 0)：右上角，距离左边100%，距离上边0；
+       3. (100%, 100% - _d)：右下角，距离左边100%，距离上边100% - _d；
+       4. (100% - _d, 100%)：左下角，距离左边100% - _d，距离上边100%；
+       5. (0, 100%)：左下角，距离左边0，距离上边100%；
+       6. (0, _d)：左上角，距离左边0，距离上边_d。
+       这样就创建了一个六边形的剪切路径。 */
+    background:
+      conic-gradient(from -90deg at calc(100% - var(--_d)) var(--_d),
+        #fff 135deg, #666 0 270deg, #aaa 0);
+    /* 设置背景为圆锥渐变。这个渐变的起始角度为-90度，中心点的位置由CSS变量_d和百分比值计算得出。
+       渐变的颜色分布如下：
+       1. 从0度到135度，颜色从#fff（白色）渐变到#666（深灰色）；
+       2. 从135度到270度，颜色保持为#666（深灰色）；
+       3. 从270度到360度，颜色从#666（深灰色）渐变到#aaa（浅灰色）。
+       这样就创建了一个圆锥渐变的背景。 */
+    /* animation: l5 1.2s infinite; */
+    /* 应用名为l5的关键帧动画，持续时间为1.2秒，无限次重复 */
+  }
+
+  .loader:before {
+    margin-right: calc(var(--_d)/-2 - 1px);
+  }
+
+  .loader:after {
+    margin-left: calc(var(--_d)/-2 - 1px);
+    animation-delay: 0.6s
+  }
+
+  @keyframes l5 {
+    0% {
+      transform: translateY(0)
+    }
+
+    16.67% {
+      transform: translateY(-10px)
+    }
+
+    33.33% {
+      transform: translateY(10px)
+    }
+
+    50%,
+    100% {
+      transform: translateY(0)
+    }
+  }
+</style>
+
+</html>
